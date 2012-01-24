@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<MenuConfig>
+
+	<Displayers>
+		<Displayer name="DropDown"
+			type="net.sf.navigator.displayer.DropDownMenuDisplayer" />
+		<Displayer name="Simple"
+			type="net.sf.navigator.displayer.SimpleMenuDisplayer" />
+		<Displayer name="CoolMenu"
+			type="net.sf.navigator.displayer.CoolMenuDisplayer" />
+		<Displayer name="CoolMenu4"
+			type="net.sf.navigator.displayer.CoolMenuDisplayer4" />
+		<Displayer name="MenuForm"
+			type="net.sf.navigator.example.PermissionsFormMenuDisplayer" />
+		<Displayer name="ListMenu"
+			type="net.sf.navigator.displayer.ListMenuDisplayer" />
+		<Displayer name="TabbedMenu"
+			type="net.sf.navigator.displayer.TabbedMenuDisplayer" />
+		<Displayer name="Velocity"
+			type="net.sf.navigator.displayer.VelocityMenuDisplayer" />
+	</Displayers>
+
+	<Menus>
+		<Menu name="adminCustomer" title="Admin. Customers">
+			<Item title="Add a new customer" location="AddCustomer.do" />
+			<Item title="List all customers" location="ListCustomer.do" />
+		</Menu>
+
+		<Menu name="contact" title="Contact">
+			<Item title="E-Mail" location="AddCustomer.do" />
+			<Item title="Phone" location="ListCustomer.do" />
+		</Menu>
+
+	</Menus>
+
+</MenuConfig>

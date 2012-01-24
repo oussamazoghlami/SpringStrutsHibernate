@@ -1,0 +1,15 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Add Customer Action -->
+	<bean name="/AddCustomer" class="com.tunisiana.tutorials.action.AddCustomerAction" />
+	
+	<!-- List Customer Action -->
+	<bean name="/ListCustomer" class="com.tunisiana.tutorials.action.ListCustomerAction" />
+	
+	<!-- PDF List Customer Action -->
+	<bean name="/ListCustomerPDF" class="com.tunisiana.tutorials.action.JasperListCustomerAction" />
+
+</beans>

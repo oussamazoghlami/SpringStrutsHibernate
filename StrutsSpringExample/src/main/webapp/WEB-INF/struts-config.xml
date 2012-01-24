@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts-config PUBLIC 
+"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" 
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+	<!-- =========== Form Beans =========== -->
+	<form-beans>
+		<form-bean name="customerForm"
+			type="com.tunisiana.tutorials.form.CustomerForm" />
+
+		<form-bean name="dynaCustomerListForm"
+			type="org.apache.struts.action.DynaActionForm">
+			<form-property name="customerList" type="java.util.List" />
+		</form-bean>
+	</form-beans>
+
+
+
+	<!-- ========== Action Mappings ====== -->
+	<action-mappings>
+		<action path="/AddCustomerPage"
+			type="org.apache.struts.actions.ForwardAction"
+			parameter=".page.addCustomer" />
+
+		<!-- Add customer action -->
+		<action path="/AddCustomer"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			name="customerForm" validate="true" input=".page.addCustomer">
+			<forward name="success" redirect="true"
+				path="/ListCustomer.do" />
+		</action>
+
+		<!-- List customer action -->
+		<action path="/ListCustomer"
+			type="org.springframework.web.struts.DelegatingActionProxy"
+			name="dynaCustomerListForm">
+			<forward name="success" path=".page.listCustomer" />
+		</action>
+
+		<!-- List customer Pdf viewer action -->
+		<action path="/ListCustomerPDF"
+			type="org.springframework.web.struts.DelegatingActionProxy">
+			<forward name="success" path=".page.listCustomer" />
+		</action>
+
+	</action-mappings>
+
+
+
+	<!-- ======== Message Resources ======= -->
+	<message-resources parameter="Customer" />
+
+
+
+	<!-- =========== Plugins =========== -->
+	<!-- Tiles plugin  -->
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+
+		<set-property property="definitions-config"
+			value="/WEB-INF/tiles-defs.xml" />
+		<!-- Set Module-awareness to true -->
+		<set-property property="moduleAware" value="true" />
+	</plug-in>
+
+	<!-- Menu plugin -->
+	<plug-in className="net.sf.navigator.menu.MenuPlugIn">
+		<set-property property="menuConfig"
+			value="/WEB-INF/menu-config.xml" /><!-- Default settings -->
+	</plug-in>
+
+</struts-config>

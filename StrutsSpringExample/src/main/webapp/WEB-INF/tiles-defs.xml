@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+       
+<tiles-definitions>
+
+	<!-- Base Tiles Definition -->
+	<definition name="base.definition" path="/pages/tiles/mainLayout.jsp">
+		<put name="header" value="/pages/tiles/header.jsp" />
+		<put name="footer" value="/pages/tiles/footer.jsp" />
+		<put name="menu" value="/pages/tiles/menu.jsp" />
+	</definition>
+
+	<!-- Add Customer Page -->
+	<definition name=".page.addCustomer" extends="base.definition">
+		<put name="title" value="Add a new customer" />
+		<put name="body" value="/pages/customer/add_customer.jsp" />
+	</definition>
+	
+	<!-- List Customer Page -->
+	<definition name=".page.listCustomer" extends="base.definition">
+		<put name="title" value="List of customers" />
+		<put name="body" value="/pages/customer/list_customer.jsp" />
+	</definition>
+	
+</tiles-definitions>
