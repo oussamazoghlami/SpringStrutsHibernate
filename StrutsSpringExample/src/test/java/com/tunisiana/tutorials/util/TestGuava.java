@@ -20,9 +20,12 @@ import com.google.common.base.Splitter;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.collect.Collections2;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+import com.google.common.collect.Range;
+import com.google.common.collect.Ranges;
 import com.google.common.primitives.Ints;
 
 /**
@@ -32,7 +35,7 @@ import com.google.common.primitives.Ints;
  * 
  */
 public class TestGuava {
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testGuavaPreconditions() {
 		String name = null;
@@ -103,26 +106,50 @@ public class TestGuava {
 				return input == null ? 0 : input.length();
 			}
 		};
-		
+
 		assertEquals(0, (int) lengthMapper.apply(null));
 		assertEquals(0, (int) lengthMapper.apply(""));
 		assertEquals(4, (int) lengthMapper.apply("hahi"));
 	}
-	
+
 	@Test
 	public void testGuavaStringsUtil() {
 		// Test String Joiner
 		Joiner joiner = Joiner.on("; ").skipNulls();
-		String result = joiner.join("Hello","Mr","Ghost",null,"Man");
+		String result = joiner.join("Hello", "Mr", "Ghost", null, "Man");
 		assertEquals("Hello; Mr; Ghost; Man", result);
-		
+
 		// Test Splitter Method
 		Splitter splitter = Splitter.on(",").omitEmptyStrings().trimResults();
 		assertEquals("[foo, bar, qux]", Iterables.toString(splitter.split("foo,bar,,   qux")));
-		
+
 		// CharMatcher
 		assertEquals("22275037", CharMatcher.DIGIT.retainFrom("Tel Number: 22275037"));
 		assertTrue(CharMatcher.JAVA_UPPER_CASE.matchesAllOf("AAABBBBCC"));
+	}
+
+	@Test
+	public void testGuavaRanges() {
+		// Less Than predicate
+		List<Integer> scores = Lists.newArrayList(1, 34, 4, 23, 5, 10, 8, 20, 15, 40, 2);
+		Iterable<Integer> lowScores = Iterables.filter(scores, Ranges.lessThan(10));
+		assertEquals("[1, 4, 5, 8, 2]", lowScores.toString());
+
+		// Interval predicate
+		Iterable<Integer> middleScores = Iterables.filter(scores, Ranges.closed(10, 20));
+		assertEquals("[10, 20, 15]", middleScores.toString());
+
+		assertTrue(Ranges.closed(1, 5).containsAll(Ints.asList(1, 2, 4)));
+
+		// Intersection
+		Range<Integer> intersectionRange = Ranges.closed(1, 5).intersection(Ranges.closed(4, 10));
+		assertEquals(new Integer(4), intersectionRange.lowerEndpoint());
+		assertEquals(new Integer(5), intersectionRange.upperEndpoint());
+
+		// Union (Span)
+		Range<Integer> unionRange = Ranges.closed(1, 5).span(Ranges.openClosed(5, 12));
+		assertEquals(new Integer(1), unionRange.lowerEndpoint());
+		assertEquals(new Integer(12), unionRange.upperEndpoint());
 	}
 
 }
